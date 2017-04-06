@@ -8,10 +8,13 @@ public class DoorX : BaseDoor {
     private Vector3 initialPos;
     private bool open = false;
     private bool opened = false;
+    protected bool unlocked = false;
+    public Light lt;
 
 	// Use this for initialization
 	void Start () {
         initialPos = this.transform.position;
+        lt = lt.GetComponent<Light>();
 	}
 	
 	// Update is called once per frame
@@ -31,6 +34,15 @@ public class DoorX : BaseDoor {
             }
         }
 
+        if (unlocked)
+        {
+            lt.color = Color.green;
+        }
+        else
+        {
+            lt.color = Color.red;
+        }
+
         if (Input.GetKeyDown("e") && Vector3.Distance(player.transform.position, this.transform.position) < 15)
         {
             Open();
@@ -43,7 +55,7 @@ public class DoorX : BaseDoor {
 
     public override void Open()
     {
-        if (!opened)
+        if (!opened && unlocked)
         {
             open = true;
             opened = true;
@@ -52,10 +64,33 @@ public class DoorX : BaseDoor {
 
     public override void Close()
     {
-        if (opened)
+        if (opened && unlocked)
         {
             open = false;
             opened = false;
+        }
+    }
+
+    public override void Unlock()
+    {
+        unlocked = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "monster")
+        {
+            if(unlocked)
+            {
+                Open();
+            }
+            else
+            {
+                unlocked = true;
+                Open();
+                unlocked = false;
+            }
+            
         }
     }
 }
