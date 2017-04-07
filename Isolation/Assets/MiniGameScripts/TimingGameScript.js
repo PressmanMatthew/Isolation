@@ -112,8 +112,8 @@ function Update () {
 		}
 	}
 	else{
-		if(score <=3)	
-			//GameObject.CreatePrimitive(PrimitiveType.Cube);
+		if(score >=3)	
+			GameObject.Find("GameManager").GetComponent(Temp_GM).success = true;
 		
 		mm.UnloadScene(1);
 	}
