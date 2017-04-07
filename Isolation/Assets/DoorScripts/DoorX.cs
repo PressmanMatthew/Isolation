@@ -10,6 +10,7 @@ public class DoorX : BaseDoor {
     private bool opened = false;
     protected bool unlocked = false;
     public Light lt;
+    private bool gameWon = false;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +20,14 @@ public class DoorX : BaseDoor {
 	
 	// Update is called once per frame
 	void Update () {
+        gameWon = GameObject.Find("GameManager").GetComponent<Temp_GM>().success;
+
+        if(gameWon && Vector3.Distance(initialPos, player.transform.position) < 25)
+        {
+            Unlock();
+            Open();
+        }
+
         if (open)
         {
             if(Vector3.Distance(this.transform.position, initialPos) < 17)
