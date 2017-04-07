@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HeroMovement : MonoBehaviour {
-    
+
+    public GameObject flashLight;
+    public GameObject enemy;
+    private float lightDirection;
     private float inputDirection; //X Value of moveVector
     private float verticalacceleration; //Y Value of moveVector
     private Vector3 acceleration;
@@ -25,7 +28,6 @@ public class HeroMovement : MonoBehaviour {
     {
 
         acceleration = Vector3.zero;
-
 
         // w key
         if (Input.GetKeyDown("w"))
@@ -84,17 +86,86 @@ public class HeroMovement : MonoBehaviour {
         }
 
 
-        
+        // flashlight direction
+        if (wDown)
+        {
+            if (aDown)
+            {
+                lightDirection = 315;
+            }
+            else if (dDown)
+            {
+                lightDirection = 45;
+            }
+            else
+            {
+                lightDirection = 0;
+            }
+        }
+
+
+        if (aDown)
+        {
+            if (wDown)
+            {
+                lightDirection = 315;
+            }
+            else if (sDown)
+            {
+                lightDirection = 225;
+            }
+            else
+            {
+                lightDirection = 270;
+            }
+        }
+
+
+        if (sDown)
+        {
+            if (aDown)
+            {
+                lightDirection = 225;
+            }
+            else if (dDown)
+            {
+                lightDirection = 135;
+            }
+            else
+            {
+                lightDirection = 180;
+            }
+        }
+
+
+        if (dDown)
+        {
+            if (wDown)
+            {
+                lightDirection = 45;
+            }
+            else if (sDown)
+            {
+                lightDirection = 135;
+            }
+            else
+            {
+                lightDirection = 90;
+            }
+        }
+
+
 
         velocity += acceleration;
 
+        // update the rotation of the flashlight
+        flashLight.transform.localEulerAngles = new Vector3(0, lightDirection, 0);
 
         // update position every frame
         transform.Translate((velocity * Time.deltaTime) * 15);
 
         // stop the hero from rotating on edges
         transform.localEulerAngles = new Vector3(0, 0, 0);
-
 
 
 
