@@ -14,8 +14,6 @@ public class RandomDoors : MonoBehaviour {
 
         foreach (BaseDoor child in gameObject.GetComponentsInChildren<BaseDoor>())
         {
-            
-
             if (child.tag == "door")
             {
                 Children.Add(child);
@@ -24,14 +22,11 @@ public class RandomDoors : MonoBehaviour {
 
         int rand = Random.Range(minOpen, maxOpen);
 
-        Debug.Log("Doors to open: " + rand);
-
         for (int i = 0; i < rand; i++)
         {
             int randDoor = Random.Range(0, Children.Count);
 
-            Debug.Log("Opening door: " + randDoor);
-
+            Children[randDoor].Unlock();
             Children[randDoor].Open();
             Children.RemoveAt(randDoor);
         }

@@ -11,4 +11,8 @@ public class BaseDoor : MonoBehaviour
     public virtual void Close()
     {
     }
+
+    public virtual void Unlock()
+    {
+    }
 }
