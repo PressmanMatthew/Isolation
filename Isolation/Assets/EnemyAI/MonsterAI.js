@@ -1,16 +1,18 @@
-﻿#pragma strict
+#pragma strict
 
 var speed = 2;
 var centersList;
 var previousPreviousTarget : GameObject;
 var previousTarget : GameObject;
 var currentTarget : GameObject;
+var hero : GameObject;
 
 function Start () {
 
 	var centers : GameObject[];
 
 	centers = GameObject.FindGameObjectsWithTag("roomCenter");
+	hero = GameObject.FindWithTag("Player");
 
 	centersList = centers;
 
@@ -31,7 +33,36 @@ function Update () {
 		currentTarget = findNearestCenter();
 	}
 
-	seek(currentTarget);
+	var rayCastBool = findHero();
+
+	Debug.Log(rayCastBool.transform);
+
+	if(rayCastBool.transform.gameObject.tag === "Player"){
+
+		seek(hero);
+
+		previousPreviousTarget = previousTarget;
+		previousTarget = currentTarget;
+		currentTarget = findNearestCenter();
+	} else {
+
+		seek(currentTarget);
+
+	}
+}
+
+function findHero() {
+	var hit : RaycastHit;
+
+	var direction  = (transform.position - hero.transform.position);
+	direction = direction.normalized;
+	Debug.DrawLine(transform.position, hero.transform.position, Color.red);
+
+	Physics.Raycast(transform.position, direction, hit, 1000);
+
+
+
+	return hit;
 }
 
 function findNearestCenter () {
