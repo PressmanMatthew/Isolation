@@ -1,6 +1,7 @@
 #pragma strict
 
 var speed = 2;
+var sightDist = 1000;
 var centersList;
 var previousPreviousTarget : GameObject;
 var previousTarget : GameObject;
@@ -35,17 +36,20 @@ function Update () {
 
 	var rayCastBool = findHero();
 
-	Debug.Log(rayCastBool.transform);
+	Debug.Log(rayCastBool.transform.gameObject);
 
-	if(rayCastBool.transform.gameObject.tag === "Player"){
+	if(rayCastBool.transform.gameObject === hero){
 
-		seek(hero);
+		Debug.Log("seeking hero");
+
+		seekHero();
 
 		previousPreviousTarget = previousTarget;
 		previousTarget = currentTarget;
 		currentTarget = findNearestCenter();
 	} else {
 
+		Debug.Log("seeking center");
 		seek(currentTarget);
 
 	}
@@ -54,12 +58,11 @@ function Update () {
 function findHero() {
 	var hit : RaycastHit;
 
-	var direction  = (transform.position - hero.transform.position);
+	var direction  = (hero.transform.position - transform.position);
 	direction = direction.normalized;
 	Debug.DrawLine(transform.position, hero.transform.position, Color.red);
 
-	Physics.Raycast(transform.position, direction, hit, 1000);
-
+	Physics.Raycast(transform.position, direction, hit, sightDist);
 
 
 	return hit;
@@ -110,4 +113,13 @@ function seek (target : GameObject) {
 	}
 
 	Debug.DrawLine(transform.position, target.transform.position, Color.red);
+}
+
+function seekHero () {
+
+	var seekVector = (hero.transform.position - transform.position);
+	var seekVectorNorm = seekVector.normalized;
+	transform.position += (seekVectorNorm *speed*.01);
+
+	Debug.DrawLine(transform.position, hero.transform.position, Color.red);
 }
