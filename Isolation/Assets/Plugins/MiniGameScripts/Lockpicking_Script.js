@@ -43,8 +43,13 @@ function Update () {
 			container.transform.Rotate(Vector3.up * rand);
 		}
 	}
-	if(score >=3 || Input.GetKeyDown(KeyCode.Q)){
+	if(score >=3){
 			GameObject.Find("GameManager").GetComponent(Temp_GM).success = true;
 		mm.UnloadScene(2);
+	}
+
+	if(Input.GetKeyDown(KeyCode.Q))
+	{
+	    mm.UnloadScene(2);
 	}
 }

@@ -37,7 +37,7 @@ public class DoorX : BaseDoor {
         }
         else if (!open)
         {
-            if (Vector3.Distance(this.transform.position, initialPos) > 0.1)
+            if (Vector3.Distance(this.transform.position, initialPos) > 0.5)
             {
                 gameObject.transform.Translate(new Vector3(-10f * Time.deltaTime, 0f, 0f));
             }
@@ -52,7 +52,7 @@ public class DoorX : BaseDoor {
             lt.color = Color.red;
         }
 
-        if (Input.GetKeyDown("e") && Vector3.Distance(player.transform.position, this.transform.position) < 15)
+        if (Input.GetKeyDown("e") && Vector3.Distance(player.transform.position, initialPos) < 15)
         {
             Open();
         }
