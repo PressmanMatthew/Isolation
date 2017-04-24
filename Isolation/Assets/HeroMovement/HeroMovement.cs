@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class HeroMovement : MonoBehaviour
 {
 
     public GameObject flashLight;
     public GameObject enemy;
+    public GameObject winBox;
     private float lightDirection;
     private float inputDirection; //X Value of moveVector
     private float verticalacceleration; //Y Value of moveVector
@@ -172,7 +175,17 @@ public class HeroMovement : MonoBehaviour
         if (Vector3.Distance(enemy.transform.position, transform.position) < 15)
         {
             print("Our hero has died!");
+            SceneManager.LoadScene("youLose");
+
         }
+
+        // checking for the player winning
+        if (Vector3.Distance(winBox.transform.position, transform.position) < 15)
+        {
+            print("You win!");
+            SceneManager.LoadScene("youWin");
+        }
+
 
 
         // ALL BELOW CODE IS THROW AWAY CODE, PREVIOUSLY USED TO SOLVE BUGS.
